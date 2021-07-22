@@ -1,5 +1,6 @@
 import 'package:cbj_hub/domain/device_type/device_type_enums.dart';
 import 'package:cbj_hub/domain/devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_hub/domain/devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_hub/domain/devices/sonoff_s20/sonoff_s20_device_entity.dart';
 import 'package:cbj_hub/domain/devices/sonoff_s20/sonoff_s20_value_objects.dart';
 import 'package:cbj_hub/infrastructure/devices/abstract_device/device_entity_dto_abstract.dart';
@@ -30,6 +31,7 @@ abstract class SonoffS20Dtos
     String? deviceSecondWiFi,
     String? deviceMdnsName,
     String? lastKnownIp,
+    String? sonoffS20SwitchKey,
 
     // required ServerTimestampConverter() FieldValue serverTimeStamp,
   }) = _SonoffS20Dtos;
@@ -57,6 +59,7 @@ abstract class SonoffS20Dtos
       deviceSecondWiFi: sonoffS20DE.deviceSecondWiFi!.getOrCrash(),
       deviceMdnsName: sonoffS20DE.deviceMdnsName!.getOrCrash(),
       lastKnownIp: sonoffS20DE.lastKnownIp!.getOrCrash(),
+      sonoffS20SwitchKey: sonoffS20DE.sonoffS20SwitchKey!.getOrCrash(),
       // serverTimeStamp: FieldValue.serverTimestamp(),
     );
   }
@@ -67,21 +70,22 @@ abstract class SonoffS20Dtos
   DeviceEntityAbstract toDomain() {
     print('SonoffS2Dto to Domain');
     return SonoffS20DE(
-      id: SonoffS20UniqueId.fromUniqueString(id),
-      defaultName: SonoffS20DefaultName(defaultName),
-      roomId: SonoffS20UniqueId.fromUniqueString(roomId),
-      roomName: SonoffS20RoomName(roomName),
-      deviceStateGRPC: SonoffS20State(deviceStateGRPC),
-      stateMassage: SonoffS20StateMassage(stateMassage),
-      senderDeviceOs: SonoffS20SenderDeviceOs(senderDeviceOs),
-      senderDeviceModel: SonoffS20SenderDeviceModel(senderDeviceModel),
-      senderId: SonoffS20SenderId.fromUniqueString(senderId),
-      deviceActions: SonoffS20Action(deviceActions),
-      deviceTypes: SonoffS20Type(deviceTypes),
-      compUuid: SonoffS20CompUuid(compUuid),
-      deviceSecondWiFi: SonoffS20SecondWiFiName(deviceSecondWiFi),
-      deviceMdnsName: SonoffS20MdnsName(deviceMdnsName),
-      lastKnownIp: SonoffS20LastKnownIp(lastKnownIp),
+      id: CoreUniqueId.fromUniqueString(id),
+      defaultName: DeviceDefaultName(defaultName),
+      roomId: CoreUniqueId.fromUniqueString(roomId),
+      roomName: DeviceRoomName(roomName),
+      deviceStateGRPC: DeviceState(deviceStateGRPC),
+      stateMassage: DeviceStateMassage(stateMassage),
+      senderDeviceOs: DeviceSenderDeviceOs(senderDeviceOs),
+      senderDeviceModel: DeviceSenderDeviceModel(senderDeviceModel),
+      senderId: DeviceSenderId.fromUniqueString(senderId),
+      deviceActions: DeviceAction(deviceActions),
+      deviceTypes: DeviceType(deviceTypes),
+      compUuid: DeviceCompUuid(compUuid),
+      deviceSecondWiFi: DeviceSecondWiFiName(deviceSecondWiFi),
+      deviceMdnsName: DeviceMdnsName(deviceMdnsName),
+      lastKnownIp: DeviceLastKnownIp(lastKnownIp),
+      sonoffS20SwitchKey: SonoffS20SwitchKey(sonoffS20SwitchKey),
     );
   }
 

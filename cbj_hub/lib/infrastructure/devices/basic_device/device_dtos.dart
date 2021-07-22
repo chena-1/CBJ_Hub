@@ -1,6 +1,6 @@
 import 'package:cbj_hub/domain/device_type/device_type_enums.dart';
+import 'package:cbj_hub/domain/devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_hub/domain/devices/basic_device/device_entity.dart';
-import 'package:cbj_hub/domain/devices/basic_device/value_objects.dart';
 import 'package:cbj_hub/infrastructure/devices/abstract_device/device_entity_dto_abstract.dart';
 import 'package:cbj_hub/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -68,9 +68,9 @@ abstract class DeviceDtos implements _$DeviceDtos, DeviceEntityDtoAbstract {
   DeviceEntity toDomain() {
     print('To Domain deviceEntity');
     return DeviceEntity(
-      id: DeviceUniqueId.fromUniqueString(id),
+      id: CoreUniqueId.fromUniqueString(id),
       defaultName: DeviceDefaultName(defaultName),
-      roomId: DeviceUniqueId.fromUniqueString(roomId),
+      roomId: CoreUniqueId.fromUniqueString(roomId),
       roomName: DeviceRoomName(roomName),
       deviceStateGRPC: DeviceState(deviceStateGRPC),
       stateMassage: DeviceStateMassage(stateMassage),

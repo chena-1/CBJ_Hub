@@ -1,5 +1,6 @@
+import 'package:cbj_hub/domain/devices/abstract_device/core_failures.dart';
 import 'package:cbj_hub/domain/devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_hub/domain/devices/sonoff_s20/sonoff_s20_failures.dart';
+import 'package:cbj_hub/domain/devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_hub/domain/devices/sonoff_s20/sonoff_s20_value_objects.dart';
 import 'package:cbj_hub/infrastructure/devices/abstract_device/device_entity_dto_abstract.dart';
 import 'package:cbj_hub/infrastructure/devices/sonoff_s20/sonoff_s20_dtos.dart';
@@ -15,77 +16,82 @@ abstract class SonoffS20DE implements _$SonoffS20DE, DeviceEntityAbstract {
   /// All public field of sonoffS20 entity
   const factory SonoffS20DE({
     /// The smart sonoffS20 id
-    required SonoffS20UniqueId? id,
+    //
+    required CoreUniqueId? id,
 
     /// The default name of the sonoffS20
-    required SonoffS20DefaultName? defaultName,
+    required DeviceDefaultName? defaultName,
 
     /// Room id that the smart sonoffS20 located in.
-    required SonoffS20UniqueId? roomId,
+    required CoreUniqueId? roomId,
 
     /// Room name that the smart sonoffS20 located in.
-    required SonoffS20RoomName? roomName,
+    required DeviceRoomName? roomName,
 
     /// Did the massage arrived or was it just sent.
     /// Will be 'set' (need change) or 'ack' for acknowledge
-    required SonoffS20State? deviceStateGRPC,
+    required DeviceState? deviceStateGRPC,
 
     /// If state didn't change the error description will be found here.
-    SonoffS20StateMassage? stateMassage,
+    DeviceStateMassage? stateMassage,
 
     /// Sender SonoffS20 os type, example: android, iphone, browser
-    required SonoffS20SenderDeviceOs? senderDeviceOs,
+    required DeviceSenderDeviceOs? senderDeviceOs,
 
     /// The sender SonoffS20 model, example: onePlus 3T
-    required SonoffS20SenderDeviceModel? senderDeviceModel,
+    required DeviceSenderDeviceModel? senderDeviceModel,
 
     /// Last SonoffS20 sender id that activated the action
-    required SonoffS20SenderId? senderId,
+    required DeviceSenderId? senderId,
 
     /// What action to execute
-    required SonoffS20Action? deviceActions,
+    required DeviceAction? deviceActions,
 
     /// The smart sonoffS20 type
-    required SonoffS20Type? deviceTypes,
+    required DeviceType? deviceTypes,
 
     /// Unique id of the computer that the sonoffS20s located in
-    required SonoffS20CompUuid? compUuid,
+    required DeviceCompUuid? compUuid,
 
     /// Last known Ip of the computer that the sonoffS20 located in
-    SonoffS20LastKnownIp? lastKnownIp,
+    DeviceLastKnownIp? lastKnownIp,
 
     /// SonoffS20 power consumption in watts
-    SonoffS20PowerConsumption? powerConsumption,
+    DevicePowerConsumption? powerConsumption,
 
     /// SonoffS20 mdns name
-    SonoffS20MdnsName? deviceMdnsName,
+    DeviceMdnsName? deviceMdnsName,
 
     /// SonoffS20 second WiFi
-    SonoffS20SecondWiFiName? deviceSecondWiFi,
+    DeviceSecondWiFiName? deviceSecondWiFi,
+
+    /// SonoffS20 key of the switch
+    SonoffS20SwitchKey? sonoffS20SwitchKey,
   }) = _SonoffS20DE;
 
   const SonoffS20DE._();
 
   /// Empty instance of SonoffS20Entity
   factory SonoffS20DE.empty() => SonoffS20DE(
-        id: SonoffS20UniqueId(),
-        defaultName: SonoffS20DefaultName(''),
-        roomId: SonoffS20UniqueId(),
-        roomName: SonoffS20RoomName(''),
-        deviceStateGRPC: SonoffS20State(''),
-        senderDeviceOs: SonoffS20SenderDeviceOs(''),
-        senderDeviceModel: SonoffS20SenderDeviceModel(''),
-        stateMassage: SonoffS20StateMassage(''),
-        senderId: SonoffS20SenderId(),
-        deviceActions: SonoffS20Action(''),
-        deviceTypes: SonoffS20Type(''),
-        compUuid: SonoffS20CompUuid(''),
-        lastKnownIp: SonoffS20LastKnownIp(''),
+        id: CoreUniqueId(),
+        defaultName: DeviceDefaultName(''),
+        roomId: CoreUniqueId(),
+        roomName: DeviceRoomName(''),
+        deviceStateGRPC: DeviceState(''),
+        senderDeviceOs: DeviceSenderDeviceOs(''),
+        senderDeviceModel: DeviceSenderDeviceModel(''),
+        stateMassage: DeviceStateMassage(''),
+        senderId: DeviceSenderId(),
+        deviceActions: DeviceAction(''),
+        deviceTypes: DeviceType(''),
+        compUuid: DeviceCompUuid(''),
+        lastKnownIp: DeviceLastKnownIp(''),
+        sonoffS20SwitchKey: SonoffS20SwitchKey(''),
       );
 
   /// Will return failure if any of the fields failed or return unit if fields
   /// have legit values
-  Option<SonoffS20Failure<dynamic>> get failureOption {
+  Option<CoreFailure<dynamic>> get failureOption {
     return defaultName!.value.fold((f) => some(f), (_) => none());
     //
     // return body.failureOrUnit
@@ -101,6 +107,11 @@ abstract class SonoffS20DE implements _$SonoffS20DE, DeviceEntityAbstract {
     //           .fold(() => right(unit), (f) => left(f)),
     //     )
     //     .fold((f) => some(f), (_) => none());
+  }
+
+  @override
+  String getDeviceId() {
+    return this.id!.getOrCrash()!;
   }
 
   @override
@@ -122,6 +133,7 @@ abstract class SonoffS20DE implements _$SonoffS20DE, DeviceEntityAbstract {
       deviceSecondWiFi: deviceSecondWiFi!.getOrCrash(),
       deviceMdnsName: deviceMdnsName!.getOrCrash(),
       lastKnownIp: lastKnownIp!.getOrCrash(),
+      sonoffS20SwitchKey: sonoffS20SwitchKey!.getOrCrash(),
       // serverTimeStamp: FieldValue.serverTimestamp(),
     );
   }
