@@ -1,14 +1,16 @@
+import 'package:cbj_hub/domain/devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_hub/domain/devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_hub/domain/devices/basic_device/device_entity.dart';
+import 'package:cbj_hub/domain/devices/yeelight/yeelight_device_entity.dart';
+import 'package:cbj_hub/domain/devices/yeelight/yeelight_device_value_objects.dart';
 import 'package:cbj_hub/infrastructure/devices/abstract_device/device_entity_dto_abstract.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'device_dtos.freezed.dart';
-part 'device_dtos.g.dart';
+part 'yeelight_dtos.freezed.dart';
+part 'yeelight_dtos.g.dart';
 
 @freezed
-abstract class DeviceDtos implements _$DeviceDtos, DeviceEntityDtoAbstract {
-  factory DeviceDtos({
+abstract class YeelightDtos implements _$YeelightDtos, DeviceEntityDtoAbstract {
+  factory YeelightDtos({
     // @JsonKey(ignore: true)
     String? deviceDtoClass,
     String? id,
@@ -23,49 +25,49 @@ abstract class DeviceDtos implements _$DeviceDtos, DeviceEntityDtoAbstract {
     required String? deviceActions,
     required String? deviceTypes,
     required String? compUuid,
+    required String yeelightDeviceId,
+    required String yeelightPort,
     String? deviceSecondWiFi,
     String? deviceMdnsName,
     String? lastKnownIp,
-
     // required ServerTimestampConverter() FieldValue serverTimeStamp,
-  }) = _DeviceDtos;
+  }) = _YeelightDtos;
 
-  DeviceDtos._();
-
-  @override
-  final String deviceDtoClassInstance = (DeviceDtos).toString();
+  YeelightDtos._();
 
   @override
-  factory DeviceDtos.fromDomain(DeviceEntity deviceEntity) {
-    print('DeviceDtos.fromDomain');
+  final String deviceDtoClassInstance = (YeelightDtos).toString();
 
-    return DeviceDtos(
-      deviceDtoClass: (DeviceDtos).toString(),
-      id: deviceEntity.id!.getOrCrash(),
-      defaultName: deviceEntity.defaultName!.getOrCrash(),
-      roomId: deviceEntity.roomId!.getOrCrash(),
-      roomName: deviceEntity.roomName!.getOrCrash(),
-      deviceStateGRPC: deviceEntity.deviceStateGRPC!.getOrCrash(),
-      stateMassage: deviceEntity.stateMassage!.getOrCrash(),
-      senderDeviceOs: deviceEntity.senderDeviceOs!.getOrCrash(),
-      senderDeviceModel: deviceEntity.senderDeviceModel!.getOrCrash(),
-      senderId: deviceEntity.senderId!.getOrCrash(),
-      deviceActions: deviceEntity.deviceActions!.getOrCrash(),
-      deviceTypes: deviceEntity.deviceTypes!.getOrCrash(),
-      compUuid: deviceEntity.compUuid!.getOrCrash(),
-      deviceSecondWiFi: deviceEntity.deviceSecondWiFi!.getOrCrash(),
-      deviceMdnsName: deviceEntity.deviceMdnsName!.getOrCrash(),
-      lastKnownIp: deviceEntity.lastKnownIp!.getOrCrash(),
+  factory YeelightDtos.fromDomain(YeelightDE yeelightDE) {
+    return YeelightDtos(
+      deviceDtoClass: (YeelightDtos).toString(),
+      id: yeelightDE.id!.getOrCrash(),
+      defaultName: yeelightDE.defaultName!.getOrCrash(),
+      roomId: yeelightDE.roomId!.getOrCrash(),
+      roomName: yeelightDE.roomName!.getOrCrash(),
+      deviceStateGRPC: yeelightDE.deviceStateGRPC!.getOrCrash(),
+      stateMassage: yeelightDE.stateMassage!.getOrCrash(),
+      senderDeviceOs: yeelightDE.senderDeviceOs!.getOrCrash(),
+      senderDeviceModel: yeelightDE.senderDeviceModel!.getOrCrash(),
+      senderId: yeelightDE.senderId!.getOrCrash(),
+      deviceActions: yeelightDE.deviceActions!.getOrCrash(),
+      deviceTypes: yeelightDE.deviceTypes!.getOrCrash(),
+      compUuid: yeelightDE.compUuid!.getOrCrash(),
+      deviceSecondWiFi: yeelightDE.deviceSecondWiFi!.getOrCrash(),
+      deviceMdnsName: yeelightDE.deviceMdnsName!.getOrCrash(),
+      lastKnownIp: yeelightDE.lastKnownIp!.getOrCrash(),
+      yeelightDeviceId: yeelightDE.yeelightDeviceId!.getOrCrash(),
+      yeelightPort: yeelightDE.yeelightPort!.getOrCrash(),
       // serverTimeStamp: FieldValue.serverTimestamp(),
     );
   }
 
-  factory DeviceDtos.fromJson(Map<String, dynamic> json) =>
-      _$DeviceDtosFromJson(json);
+  factory YeelightDtos.fromJson(Map<String, dynamic> json) =>
+      _$YeelightDtosFromJson(json);
 
-  DeviceEntity toDomain() {
-    print('To Domain deviceEntity');
-    return DeviceEntity(
+  DeviceEntityAbstract toDomain() {
+    print('YeelightDto to Domain');
+    return YeelightDE(
       id: CoreUniqueId.fromUniqueString(id),
       defaultName: DeviceDefaultName(defaultName),
       roomId: CoreUniqueId.fromUniqueString(roomId),
@@ -81,6 +83,8 @@ abstract class DeviceDtos implements _$DeviceDtos, DeviceEntityDtoAbstract {
       deviceSecondWiFi: DeviceSecondWiFiName(deviceSecondWiFi),
       deviceMdnsName: DeviceMdnsName(deviceMdnsName),
       lastKnownIp: DeviceLastKnownIp(lastKnownIp),
+      yeelightDeviceId: YeelightDeviceId(yeelightDeviceId),
+      yeelightPort: YeelightPort(yeelightPort),
     );
   }
 }
